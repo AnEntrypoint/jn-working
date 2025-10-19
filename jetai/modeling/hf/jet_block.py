@@ -144,7 +144,7 @@ class JetBlock(nn.Module):
         )
 
         self.g_proj = nn.Linear(hidden_size, self.value_dim, bias=False)
-        self.o_norm = FusedRMSNormGated(self.head_v_dim, eps=float(jet_block_config.norm_eps), autotune_interval=self.autotune_interval)
+        self.o_norm = FusedRMSNormGated(self.head_v_dim, eps=float(jet_block_config.norm_eps))
         self.o_proj = nn.Linear(self.value_dim, hidden_size, bias=False)
 
     def forward(
@@ -219,8 +219,7 @@ class JetBlock(nn.Module):
                 initial_state=recurrent_state,
                 output_final_state=use_cache,
                 cu_seqlens=cu_seqlens,
-                use_qk_l2norm_in_kernel=True,
-                autotune_interval=self.autotune_interval
+                use_qk_l2norm_in_kernel=True
             )
         elif mode == 'fused_recurrent':
             o, recurrent_state = fused_recurrent_gated_delta_rule(
