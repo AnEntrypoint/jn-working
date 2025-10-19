@@ -1,34 +1,63 @@
-# python
+# Python
 __pycache__
+*.py[cod]
+*$py.class
 .pytest_cache
 .ipynb_checkpoints/
 *.swp
 .pylintrc
+*.egg-info
+*.so
+.Python
 
-# vscode
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE
 *.DS_Store
 .vscode
+.idea/
+*.swp
+*.swo
+*~
 
-# exp dir
+# Experimental
 .test/
 .slurm/
 slurm-logs/
 slurm-*.out
 slurm-*.err
 
-# dataset
+# Datasets
 assets/dataset/
 .cache
 processed_data
 
-# model
+# Models & checkpoints
 checkpoints/
 *.safetensors
+*.bin
+*.pt
+*.pth
 jetai/modeling/hf/config.json
 jetai/modeling/hf/model.safetensors.index.json
 
-# logs
-results
+# Logs & results
+results/
+logs/
+*.log
 
-# build
-*.egg-info
+# Database
+*.db
+.vexify.db
+
+# Test outputs
+test_outputs/
+outputs/
+
+# Build
+dist/
+build/
