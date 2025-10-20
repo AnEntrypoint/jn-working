@@ -21,7 +21,7 @@ if ! command -v nvidia-smi &> /dev/null; then
     exit 1
 else
     GPU_NAME=$(nvidia-smi --query-gpu=name --format=csv,noheader | head -1)
-    GPU_MEMORY=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,unit=MB | head -1)
+    GPU_MEMORY=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader | head -1 | cut -d' ' -f1)
     CUDA_VERSION=$(nvidia-smi | grep "CUDA Version" | sed 's/.*CUDA Version: \([0-9.]*\).*/\1/')
     echo "✓ Found GPU: $GPU_NAME"
     echo "✓ GPU Memory: ${GPU_MEMORY}MB"
@@ -60,7 +60,7 @@ echo "   ✓ PyTorch installed"
 # Install dependencies
 echo ""
 echo "4. Installing dependencies..."
-pip install accelerate transformers datasets jieba fuzzywuzzy rouge python-Levenshtein > /dev/null
+pip install accelerate transformers datasets jieba fuzzywuzzy rouge python-Levenshtein flash-linear-attention > /dev/null
 
 # Try to install flash-attention (optional performance boost)
 echo "   Attempting to install flash-attention for better performance..."
@@ -158,7 +158,7 @@ try:
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_NAME,
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         device_map="cuda",
         attn_implementation=attn_impl,
         low_cpu_mem_usage=True,  # Optimize memory usage
@@ -175,7 +175,7 @@ except Exception as e:
         model = AutoModelForCausalLM.from_pretrained(
             MODEL_NAME,
             trust_remote_code=True,
-            torch_dtype=torch.bfloat16,
+            dtype=torch.bfloat16,
             device_map="cuda",
             attn_implementation="sdpa",
             low_cpu_mem_usage=True,
@@ -287,7 +287,7 @@ try:
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_NAME,
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         device_map="cuda",
         attn_implementation="sdpa",
         low_cpu_mem_usage=True
