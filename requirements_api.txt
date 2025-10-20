@@ -1,0 +1,14 @@
+# API Dependencies for Jet-Nemotron
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+torch>=2.5.1
+transformers>=4.53.0
+accelerate>=1.10.1
+
+# Optional for better performance
+# flash-attn>=2.0.0  # Requires CUDA toolkit
+
+# Development dependencies (optional)
+# pytest>=7.0.0
+# httpx>=0.25.0
